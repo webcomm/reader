@@ -1,0 +1,48 @@
+{
+    "name": "webcomm/carousel",
+    "description": "Filesystem-based library for carousel images and captions.",
+    "homepage": "https://github.com/webcomm/carousel",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/cache": "4.0.*",
+        "symfony/finder": "2.3.*",
+        "daylerees/kurenai": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "mockery/mockery": "0.7.2",
+        "illuminate/filesystem": "4.0.*",
+        "illuminate/routing": "4.0.*",
+        "illuminate/support": "4.0.*"
+    },
+    "keywords": [
+        "carousel",
+        "slideshow",
+        "slider"
+    ],
+    "authors": [
+        {
+            "name": "Ben Corlett",
+            "email": "bencorlett@me.com",
+            "homepage": "http://www.webcomm.com.au",
+            "role": "Developer"
+        },
+        {
+            "name": "Webcomm",
+            "email": "contact@webcomm.com.au",
+            "homepage": "http://www.webcomm.com.au",
+            "role": "Project Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Webcomm\\Carousel": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
