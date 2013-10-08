@@ -22,5 +22,4 @@ interface GeneratorInterface
      * @throws RuntimeException
      */
     public function getPathUrl($path);
-
 }

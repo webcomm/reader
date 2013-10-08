@@ -23,6 +23,11 @@ class Item
         return $this->file;
     }
 
+    public function getFileInfo($type = null)
+    {
+        return pathinfo($this->file, $type);
+    }
+
     public function getFileUrl()
     {
         return $this
@@ -48,6 +53,19 @@ class Item
         }
 
         return $this->data;
+    }
+
+    public function get($attribute, $default = null)
+    {
+        if ($this->data === null) {
+            $this->loadAdditional();
+        }
+
+        if (isset($this->data[$attribute])) {
+            return $this->data[$attribute];
+        }
+
+        return $default;
     }
 
     protected function loadAdditional()
