@@ -82,7 +82,6 @@ class FinderTest extends PHPUnit_Framework_TestCase
 <p>This is my <strong>markdown</strong> caption!</p>
 
 <h3>Woohoo!</h3>
-
 CAPTION;
 
         $this->assertEquals($expected, $caption);
@@ -126,5 +125,15 @@ CAPTION;
             'slug' => 'this-is-the-slug',
         );
         $this->assertEquals($expected, $data);
+    }
+
+    public function testAdditionalWithNoCaption()
+    {
+        $finder = new Finder($locationGenerator = m::mock('Webcomm\Carousel\Locations\GeneratorInterface'));
+
+        $additional = $finder->findAdditional(__DIR__.'/stubs/finder/additional-no-caption/foo.jpg');
+        list($caption, $data) = $additional;
+
+        $this->assertNull($caption);
     }
 }

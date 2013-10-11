@@ -44,15 +44,26 @@ class ItemTest extends PHPUnit_Framework_TestCase
         $item->getCaption();
     }
 
-    public function testCaptionExists()
+    public function testHasCaption()
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
         $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
-        $this->assertEquals(true, $item->captionExists());
+        $this->assertTrue($item->hasCaption());
 
         // Hit once more to test lazy load against Mockery expectations
-        $item->getCaption();
+        $item->hasCaption();
+    }
+
+    public function testHasNoCaption()
+    {
+        $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
+        $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
+        $finder->shouldReceive('findAdditional')->once()->andReturn(array(null, array('foo' => 'bar')));
+        $this->assertFalse($item->hasCaption());
+
+        // Hit once more to test lazy load against Mockery expectations
+        $item->hasCaption();
     }
 
     public function testGettingData()
@@ -61,6 +72,17 @@ class ItemTest extends PHPUnit_Framework_TestCase
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
         $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
         $this->assertEquals(array('foo' => 'bar'), $item->getData());
+
+        // Hit once more to test lazy load against Mockery expectations
+        $item->getData();
+    }
+
+    public function testGettingNoData()
+    {
+        $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
+        $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
+        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array()));
+        $this->assertEquals(array(), $item->getData());
 
         // Hit once more to test lazy load against Mockery expectations
         $item->getData();

@@ -43,12 +43,12 @@ class Item
             $this->loadAdditional();
         }
 
-        return $this->caption;
+        return $this->caption ?: null;
     }
 
-    public function captionExists() 
+    public function hasCaption()
     {
-        return isset($this->caption);
+        return (bool) $this->getCaption();
     }
 
     public function getData()
@@ -75,9 +75,25 @@ class Item
 
     protected function loadAdditional()
     {
-        list($this->caption, $this->data) = $this
+        $additional = $this
             ->carousel
             ->getFinder()
             ->findAdditional($this->file);
+
+        if ( ! $additional) {
+            $this->caption = false;
+            $this->data = array();
+        }
+
+        list($this->caption, $this->data) = $additional;
+
+        // If the caption returned from the finder as
+        // null (the correct data type for no caption)
+        // then we should set it to false here, so we
+        // don't query the filesystem again because
+        // the value is null (the initial state)
+        if ($this->caption === null) {
+            $this->caption = false;
+        }
     }
 }

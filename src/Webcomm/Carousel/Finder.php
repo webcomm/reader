@@ -77,19 +77,19 @@ class Finder
 
         switch ($extension) {
             case 'md':
-                $caption = $document->getHtmlContent();
+                $caption = trim($document->getHtmlContent());
                 break;
 
             case 'html':
-                $caption = $document->getContent();
+                $caption = trim($document->getContent());
                 break;
 
             case 'txt':
-                $caption = htmlentities($document->getContent());
+                $caption = trim(htmlentities($document->getContent()));
                 break;
         }
 
-        return array($caption, $document->get());
+        return array($caption ?: null, $document->get());
     }
 
     public function getLocationGenerator()
