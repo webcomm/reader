@@ -44,6 +44,17 @@ class ItemTest extends PHPUnit_Framework_TestCase
         $item->getCaption();
     }
 
+    public function testCaptionExists()
+    {
+        $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
+        $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
+        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
+        $this->assertEquals(true, $item->captionExists());
+
+        // Hit once more to test lazy load against Mockery expectations
+        $item->getCaption();
+    }
+
     public function testGettingData()
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
