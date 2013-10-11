@@ -46,6 +46,11 @@ class Item
         return $this->caption;
     }
 
+    public function captionExists() 
+    {
+        return isset($this->caption);
+    }
+
     public function getData()
     {
         if ($this->data === null) {
