@@ -37,7 +37,7 @@ class ItemTest extends PHPUnit_Framework_TestCase
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
-        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
+        $finder->shouldReceive('findMeta')->once()->andReturn(array('caption', array('foo' => 'bar')));
         $this->assertEquals('caption', $item->getCaption());
 
         // Hit once more to test lazy load against Mockery expectations
@@ -48,7 +48,7 @@ class ItemTest extends PHPUnit_Framework_TestCase
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
-        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
+        $finder->shouldReceive('findMeta')->once()->andReturn(array('caption', array('foo' => 'bar')));
         $this->assertTrue($item->hasCaption());
 
         // Hit once more to test lazy load against Mockery expectations
@@ -59,7 +59,7 @@ class ItemTest extends PHPUnit_Framework_TestCase
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
-        $finder->shouldReceive('findAdditional')->once()->andReturn(array(null, array('foo' => 'bar')));
+        $finder->shouldReceive('findMeta')->once()->andReturn(array(null, array('foo' => 'bar')));
         $this->assertFalse($item->hasCaption());
 
         // Hit once more to test lazy load against Mockery expectations
@@ -70,7 +70,7 @@ class ItemTest extends PHPUnit_Framework_TestCase
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
-        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array('foo' => 'bar')));
+        $finder->shouldReceive('findMeta')->once()->andReturn(array('caption', array('foo' => 'bar')));
         $this->assertEquals(array('foo' => 'bar'), $item->getData());
 
         // Hit once more to test lazy load against Mockery expectations
@@ -81,7 +81,7 @@ class ItemTest extends PHPUnit_Framework_TestCase
     {
         $item = new Item($carousel = m::mock('Webcomm\Carousel\Carousel'), __DIR__.'/file.jpg');
         $carousel->shouldReceive('getFinder')->once()->andReturn($finder = m::mock('stdClass'));
-        $finder->shouldReceive('findAdditional')->once()->andReturn(array('caption', array()));
+        $finder->shouldReceive('findMeta')->once()->andReturn(array('caption', array()));
         $this->assertEquals(array(), $item->getData());
 
         // Hit once more to test lazy load against Mockery expectations

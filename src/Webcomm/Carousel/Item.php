@@ -40,7 +40,7 @@ class Item
     public function getCaption()
     {
         if ($this->caption === null) {
-            $this->loadAdditional();
+            $this->loadMeta();
         }
 
         return $this->caption ?: null;
@@ -54,7 +54,7 @@ class Item
     public function getData()
     {
         if ($this->data === null) {
-            $this->loadAdditional();
+            $this->loadMeta();
         }
 
         return $this->data;
@@ -63,7 +63,7 @@ class Item
     public function get($attribute, $default = null)
     {
         if ($this->data === null) {
-            $this->loadAdditional();
+            $this->loadMeta();
         }
 
         if (isset($this->data[$attribute])) {
@@ -73,12 +73,12 @@ class Item
         return $default;
     }
 
-    protected function loadAdditional()
+    protected function loadMeta()
     {
         $additional = $this
             ->carousel
             ->getFinder()
-            ->findAdditional($this->file);
+            ->findMeta($this->file);
 
         if ( ! $additional) {
             $this->caption = false;

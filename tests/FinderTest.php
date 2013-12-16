@@ -71,12 +71,12 @@ class FinderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected[1], $actual[1]);
     }
 
-    public function testMarkdownAdditional()
+    public function testMarkdownMeta()
     {
         $finder = new Finder($locationGenerator = m::mock('Webcomm\Carousel\Locations\GeneratorInterface'));
 
-        $additional = $finder->findAdditional(__DIR__.'/stubs/finder/additional-markdown/foo.jpg');
-        list($caption, $data) = $additional;
+        $meta = $finder->findMeta(__DIR__.'/stubs/finder/meta-markdown/foo.jpg');
+        list($caption, $data) = $meta;
 
         $expected = <<<CAPTION
 <p>This is my <strong>markdown</strong> caption!</p>
@@ -93,12 +93,12 @@ CAPTION;
         $this->assertEquals($expected, $data);
     }
 
-    public function testHtmlAdditional()
+    public function testHtmlMeta()
     {
         $finder = new Finder($locationGenerator = m::mock('Webcomm\Carousel\Locations\GeneratorInterface'));
 
-        $additional = $finder->findAdditional(__DIR__.'/stubs/finder/additional-html/foo.jpg');
-        list($caption, $data) = $additional;
+        $meta = $finder->findMeta(__DIR__.'/stubs/finder/meta-html/foo.jpg');
+        list($caption, $data) = $meta;
 
         $expected = '<p>success</p>';
         $this->assertEquals($expected, $caption);
@@ -110,12 +110,12 @@ CAPTION;
         $this->assertEquals($expected, $data);
     }
 
-    public function testTextAdditional()
+    public function testTextMeta()
     {
         $finder = new Finder($locationGenerator = m::mock('Webcomm\Carousel\Locations\GeneratorInterface'));
 
-        $additional = $finder->findAdditional(__DIR__.'/stubs/finder/additional-text/foo.jpg');
-        list($caption, $data) = $additional;
+        $meta = $finder->findMeta(__DIR__.'/stubs/finder/meta-text/foo.jpg');
+        list($caption, $data) = $meta;
 
         $expected = '&lt;p&gt;success&lt;/p&gt;';
         $this->assertEquals($expected, $caption);
@@ -127,12 +127,12 @@ CAPTION;
         $this->assertEquals($expected, $data);
     }
 
-    public function testAdditionalWithNoCaption()
+    public function testMetaWithNoCaption()
     {
         $finder = new Finder($locationGenerator = m::mock('Webcomm\Carousel\Locations\GeneratorInterface'));
 
-        $additional = $finder->findAdditional(__DIR__.'/stubs/finder/additional-no-caption/foo.jpg');
-        list($caption, $data) = $additional;
+        $meta = $finder->findMeta(__DIR__.'/stubs/finder/meta-no-caption/foo.jpg');
+        list($caption, $data) = $meta;
 
         $this->assertNull($caption);
     }

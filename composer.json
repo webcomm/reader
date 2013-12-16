@@ -5,16 +5,15 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.0",
-        "illuminate/cache": "4.0.*",
-        "symfony/finder": "2.3.*",
+        "symfony/finder": "~2",
         "daylerees/kurenai": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
         "mockery/mockery": "0.7.2",
-        "illuminate/filesystem": "4.0.*",
-        "illuminate/routing": "4.0.*",
-        "illuminate/support": "4.0.*"
+        "illuminate/filesystem": "~4",
+        "illuminate/routing": "~4",
+        "illuminate/support": "~4"
     },
     "keywords": [
         "carousel",

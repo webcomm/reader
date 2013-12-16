@@ -3,6 +3,7 @@
 namespace Webcomm\Carousel;
 
 use Kurenai\DocumentParser;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Webcomm\Carousel\Locations\GeneratorInterface as LocationGeneratorInterface;
 
@@ -12,7 +13,7 @@ class Finder
 
     protected $fileTypes = array('jpg', 'jpeg', 'png', 'gif');
 
-    protected $additionalTypes = array('md', 'html', 'txt');
+    protected $metaTypes = array('md', 'html', 'txt');
 
     public function __construct(LocationGeneratorInterface $locationGenerator)
     {
@@ -23,9 +24,9 @@ class Finder
     {
         $basePath = $this->locationGenerator->getPath($relativePath);
         $pattern = $this->pattern($this->fileTypes);
-        $symfonyFinder = $this->createSymfonyFinder();
+        $finder = $this->createSymfonyFinder();
 
-        $symfonyFinder
+        $finder
             ->files()
             ->in($basePath)
             ->depth('== 0')
@@ -34,38 +35,39 @@ class Finder
                 return strnatcmp($a, $b);
             });
 
-        return iterator_to_array($symfonyFinder);
+        return iterator_to_array($finder);
     }
 
-    public function findAdditional($file)
+    public function findMeta($file)
     {
         $parts = pathinfo($file);
         $directory = $parts['dirname'];
         $filename = $parts['filename'];
 
-        $additionalTypes = $this->additionalTypes;
-        $pattern = $this->pattern($additionalTypes, $filename);
+        $metaTypes = $this->metaTypes;
+        $pattern = $this->pattern($metaTypes, $filename);
 
-        $symfonyFinder = $this->createSymfonyFinder();
+        $finder = $this->createSymfonyFinder();
 
-        $symfonyFinder
+        $finder
             ->files()
             ->in($directory)
             ->depth('== 0')
             ->name($pattern)
-            ->sort(function(\SplFileInfo $a, \SplFileInfo $b) use ($additionalTypes) {
-                $aIndex = array_search($a->getExtension(), $additionalTypes);
-                $bIndex = array_search($b->getExtension(), $additionalTypes);
+            ->sort(function(SplFileInfo $a, SplFileInfo $b) use ($metaTypes) {
+                $aIndex = array_search($a->getExtension(), $metaTypes);
+                $bIndex = array_search($b->getExtension(), $metaTypes);
 
-                if ($aIndex == $bIndex) return 0;
+                if ($aIndex == $bIndex) {
+                    return 0;
+                }
 
                 return ($aIndex > $bIndex) ? 1 : -1;
             });
 
-        $count = iterator_count($symfonyFinder);
-        if ($count === 0) return;
+        if ($finder->count() === 0) return;
 
-        $files = iterator_to_array($symfonyFinder);
+        $files = iterator_to_array($finder);
         $file = reset($files);
 
         $contents = file_get_contents($file->getRealPath());
@@ -112,14 +114,14 @@ class Finder
         $this->fileTypes = $fileTypes;
     }
 
-    public function getAdditionalTypes()
+    public function getMetaTypes()
     {
-        return $this->additionalTypes;
+        return $this->metaTypes;
     }
 
-    public function setAdditionalTypes(array $additionalTypes)
+    public function setMetaTypes(array $metaTypes)
     {
-        $this->additionalTypes = array_values($additionalTypes);
+        $this->metaTypes = array_values($metaTypes);
     }
 
     protected function pattern($types, $filename = null)
