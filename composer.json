@@ -1,22 +1,25 @@
 {
-    "name": "webcomm/carousel",
-    "description": "Filesystem-based library for carousel images and captions.",
-    "homepage": "https://github.com/webcomm/carousel",
+    "name": "webcomm/reader",
+    "description": "Flat-file, markdown-based reader library. Great for blog posts, carousel items, etc.",
+    "homepage": "https://github.com/webcomm/reader",
     "license": "MIT",
     "require": {
         "php": ">=5.3.0",
-        "symfony/finder": "~2",
-        "daylerees/kurenai": "dev-master"
+        "daylerees/kurenai": "dev-master",
+        "illuminate/container": "~4",
+        "illuminate/filesystem": "~4",
+        "illuminate/support": "~4",
+        "nesbot/carbon": "~1"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "mockery/mockery": "0.7.2",
-        "illuminate/filesystem": "~4",
-        "illuminate/routing": "~4",
-        "illuminate/support": "~4"
+        "mockery/mockery": "0.7.2"
     },
     "keywords": [
-        "carousel",
+        "reader",
+        "flat-file",
+        "blog",
+        "story",
         "slideshow",
         "slider"
     ],
@@ -36,7 +39,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Webcomm\\Carousel": "src/"
+            "Webcomm\\Reader": "src/"
         }
     },
     "extra": {
